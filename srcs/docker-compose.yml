@@ -1,0 +1,64 @@
+version: "3.8"
+services:
+  
+  ngix:
+    networks:
+      - simonetwork
+    image: ngix
+    container_name: nginx
+    build: ./requirements/nginx
+    ports:
+      -443:443
+    volumes:
+      - wordpress:/var/www/html
+
+  mariadb:
+    networks:
+      - simonetwork
+    image: mariadb
+    container_name: mariadb
+    build:  ./requirements/mariadb
+    ports:
+      -3306:3306
+    volumes:
+      - mariadb:/var/lib/mysql
+    env_file:
+      - ./.env
+  
+  wordpress:
+    networks:
+      - simonetwork
+    image: wordpress
+    container_name: wordpress
+    build:  ./requirements/wordpress
+    ports:
+      -9000:9000
+    depends_on:
+      - mariadb
+    volumes:
+      - wordpress:/var/www/html
+    env_file:
+      - ./.env
+    
+
+volumes:
+  mariadb:
+    external: true
+    driver: local
+    driver_opts:
+      device: ~/data/mariadb
+      type: none
+      o: bind
+
+  wordpress:
+    external: true
+    driver: local
+    driver_opts:
+      device: ~/data/wordpress
+      type: none
+      o: bind
+
+  networks:
+    simonetwork:
+    driver: bridge
+
