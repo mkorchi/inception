@@ -30,6 +30,7 @@ mkdir -p /var/www/html/mkorchi.com/
 
 CD /var/www/html/mkorchi.com/
 
+chown -R www-data:www-data /var/www/html/mkorchi.com
 
 wp core install --url=$WP_DOMAINE --title=$WP_TITLE --admin_user=$WP_ADMINUSER --admin_password=$WP_ADMINPASSWORD --admin_email=$WP_ADMINEMAIL --skip-email --allow-root
 
@@ -40,3 +41,5 @@ wp theme search MyKnowledgeBase
 wp theme install MyKnowledgeBase
 
 wp theme activate myknowledgebase
+
+php-fpm7.3 -F
