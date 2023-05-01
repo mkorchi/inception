@@ -1,9 +1,9 @@
-version: "3.8"
+version: "3.5"
 services:
   
   ngix:
     networks:
-      - simonetwork
+      - inception
     image: nginx
     container_name: nginx
     build: ./requirements/nginx
@@ -17,12 +17,10 @@ services:
 
   mariadb:
     networks:
-      - simonetwork
+      - inception
     image: mariadb
     container_name: mariadb
     build:  ./requirements/mariadb
-    ports:
-      - 3306:3306
     volumes:
       - mariadb:/var/lib/mysql
     env_file:
@@ -31,12 +29,10 @@ services:
   
   wordpress:
     networks:
-      - simonetwork
+      - inception
     image: wordpress
     container_name: wordpress
     build:  ./requirements/wordpress
-    ports:
-      - 9000:9000
     depends_on:
       - mariadb
     volumes:
@@ -63,6 +59,7 @@ volumes:
       o: bind
 
 networks:
-  simonetwork:
+  inception:
+    name: inception
     driver: bridge
 

@@ -1,0 +1,5 @@
+CREATE DATABASE IF NOT EXISTS mkorchi_db ; 
+CREATE USER IF NOT EXISTS 'mkorchi'@'%' IDENTIFIED BY 'masakado1' ; 
+GRANT ALL PRIVILEGES ON mkorchi_db.* TO 'mkorchi'@'%' ; 
+FLUSH PRIVILEGES; 
+ALTER USER 'root'@'localhost' IDENTIFIED BY '12345' ;

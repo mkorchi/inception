@@ -5,11 +5,11 @@ COMPOSE = sudo docker-compose -f srcs/docker-compose.yml
 build:
 	$(COMPOSE) build
 
-# start containers 
+# start containers, will build any images that needs to be built before starting the containers, -d for detached mode
 up:
 	$(COMPOSE) up -d
 
-# logs of the containers on the console in real-time
+# logs of the containers on the console in real-time, -f stands for follow
 logs:
 	$(COMPOSE) logs -f
 
@@ -38,16 +38,17 @@ clear_volumes:
 	sudo docker volume rm wordpress
 
 clear_imgs:
-	sudo docker image rm -f mariadb
 	sudo docker image rm -f wordpress
+	sudo docker image rm -f nginx
+	sudo docker image rm -f mariadb
 
 
-fclean: clear_volumes clear_imgs
+fclean: clear_imgs clear_volumes 
 
 # list all containers defined in the yml file
 ps:
 	$(COMPOSE) ps
 
-clear_all:
-	sudo docker container prune && docker network prune && docker image prune && docker volume prune
+ffclean:
+	sudo docker container prune  -f && docker network prune -f && docker image prune -f && docker volume prune -f
 

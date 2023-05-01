@@ -1,17 +1,20 @@
-FROM debian:10
+FROM debian:buster
 
-RUN apt-get -y update && apt-get -y upgrade
+RUN apt-get -y update && apt-get -y upgrade 
 
 RUN apt-get -y install curl 
 
-RUN apt-get install -y mariadb-server 
+RUN apt-get install -y mariadb-server
 
-RUN service mysql start
+COPY ./conf/50-server.cnf /etc/mysql/mariadb.conf.d/
 
-COPY ./conf/50-server.cnf /etc/mysql/mariadb.conf.d/50-server.cnf
-
-COPY ./tools/setup_mysql.sh /usr/local/bin/
-
-CMD [ "/usr/local/bin/setup_mysql.sh" ]
+COPY ./tools/script.sql /var/www/
 
 EXPOSE 3306
+
+RUN service mysql start && mysql < /var/www/script.sql
+
+CMD ["mysqld"]
+
+# CMD ["/usr/bin/mysqld_safe"]
+# CMD [ "/usr/local/bin/setup_mysql.sh" ]

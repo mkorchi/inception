@@ -4,13 +4,9 @@ RUN apt-get -y update && apt-get -y upgrade
 
 RUN apt-get -y install php-fpm php-mysql
 
-# RUN apt install redis
-
-# RUN apt-get -y install php7.4-redis
-
-#RUN service redis restart
-
 RUN apt-get -y install wget
+
+# RUN echo "ServerName localhost" >> /etc/apache2/apache2.conf
 
 COPY ./conf/wp-config.php /
 
