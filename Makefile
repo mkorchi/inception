@@ -33,9 +33,13 @@ restart:
 	$(COMPOSE) restart
 
 
-clear_volumes:
+clear_docker_volumes:
 	sudo docker volume rm mariadb
 	sudo docker volume rm wordpress
+
+clear_volumes:
+	sudo rm -rf ~/data/wordpress/*
+	sudo rm -rf ~/data/mariadb/*
 
 clear_imgs:
 	sudo docker image rm -f wordpress
@@ -52,3 +56,4 @@ ps:
 ffclean:
 	sudo docker container prune  -f && docker network prune -f && docker image prune -f && docker volume prune -f
 
+kill: fclean ffclean clear_extra_volume

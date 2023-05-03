@@ -1,12 +1,12 @@
-version: "3.5"
+version: "3.8"
 services:
   
   ngix:
     networks:
       - inception
-    image: nginx
-    container_name: nginx
     build: ./requirements/nginx
+    container_name: nginx
+    image: nginx
     ports:
       - 443:443
     volumes:
@@ -18,27 +18,27 @@ services:
   mariadb:
     networks:
       - inception
-    image: mariadb
-    container_name: mariadb
     build:  ./requirements/mariadb
+    container_name: mariadb
+    image: mariadb
     volumes:
       - mariadb:/var/lib/mysql
     env_file:
-      - ./.env
+      - .env
     restart: always
   
   wordpress:
     networks:
       - inception
+    build:  ./requirements/wordpress
     image: wordpress
     container_name: wordpress
-    build:  ./requirements/wordpress
     depends_on:
       - mariadb
     volumes:
       - wordpress:/var/www/html
     env_file:
-      - ./.env
+      - .env
     restart: always
 
 volumes:

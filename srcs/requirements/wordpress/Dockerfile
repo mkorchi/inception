@@ -1,16 +1,15 @@
 FROM debian:10
 
-RUN apt-get -y update && apt-get -y upgrade
+RUN apt -y update && apt -y upgrade && apt-get -y update && apt-get -y upgrade
 
-RUN apt-get -y install php-fpm php-mysql
+RUN apt-get -y install php-fpm php-mysql && apt install curl -y
 
-RUN apt-get -y install wget
+COPY ./conf/wp-config.php /wp-config.php
 
-# RUN echo "ServerName localhost" >> /etc/apache2/apache2.conf
+COPY ./tools/setup.sh /
 
-COPY ./conf/wp-config.php /
+EXPOSE 9000
 
-COPY ./tools/setup.sh /usr/local/bin/
+ENTRYPOINT [ "bash", "/setup.sh" ]
 
-CMD [ "/usr/local/bin/setup.sh" ]
-
+CMD ["php-fpm7.3", "-F"]
