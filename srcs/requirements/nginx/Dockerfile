@@ -1,14 +1,14 @@
-FROM debian:10
+FROM debian:buster
 
-RUN apt-get -y update && apt-get -y upgrade
+RUN apt-get -y update && apt-get -y upgrade 
 
 RUN apt-get -y install nginx
 
-COPY ./conf/default /etc/nginx/sites-available/default
+COPY ./conf/default /etc/nginx/sites-available/
 
-COPY ./conf/mkorchi.42.fr.crt /etc/ssl/certs/mkorchi.42.fr.crt
+COPY ./tools/mkorchi.42.fr.crt /etc/ssl/certs/
 
-COPY ./conf/mkorchi.42.fr.key /etc/ssl/private/mkorchi.42.fr.key
+COPY ./tools/mkorchi.42.fr.key /etc/ssl/private/
 
 CMD ["nginx", "-g", "daemon off;"]
 

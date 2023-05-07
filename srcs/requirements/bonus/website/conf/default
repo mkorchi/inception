@@ -1,0 +1,19 @@
+server {
+	listen 9991;
+	listen [::]:9991;
+	
+	server_name www.mkorchi.42.fr mkorchi.42.fr;
+
+	root /var/www/html/website;
+	index index.html;
+
+    location / {
+        try_files $uri $uri/ /index.html;
+    }
+}
+
+server {
+    listen       80 default_server;
+    server_name  _;
+    return       444;
+}

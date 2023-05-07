@@ -41,6 +41,50 @@ services:
       - .env
     restart: always
 
+  website:
+    networks:
+      - inception
+    build: ./requirements/bonus/website
+    container_name: website
+    image: website
+    ports:
+      - 9991:9991
+    restart: always
+
+  redis:
+    networks:
+      - inception
+    build: ./requirements/bonus/redis
+    container_name: redis
+    image: redis
+    restart: always
+  
+
+  adminer:
+    networks:
+      - inception
+    build: ./requirements/bonus/adminer
+    container_name: adminer
+    image: adminer
+    ports:
+      - 5055:5055
+    restart: always
+
+  cadvisor:
+    image: cadvisor
+    build: ./requirements/bonus/cadvisor/
+    container_name: cadvisor
+    networks:
+      - inception
+    restart: always
+    volumes:
+      - /:/rootfs:ro
+      - /var/run:/var/run:ro 
+      - /sys:/sys:ro 
+      - /var/lib/docker/:/var/lib/docker:ro
+    ports:
+      - "8080:8080"
+
 volumes:
   mariadb:
     name: mariadb
@@ -61,5 +105,4 @@ volumes:
 networks:
   inception:
     name: inception
-    driver: bridge
 

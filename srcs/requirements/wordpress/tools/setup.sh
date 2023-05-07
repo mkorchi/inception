@@ -33,6 +33,6 @@ mkdir -p /run/php
 
 wp plugin install redis-cache --activate --allow-root
 
-# wp redis enable --allow-root
+wp redis enable --allow-root
 
 exec $@

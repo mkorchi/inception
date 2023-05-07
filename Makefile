@@ -45,9 +45,12 @@ clear_imgs:
 	sudo docker image rm -f wordpress
 	sudo docker image rm -f nginx
 	sudo docker image rm -f mariadb
+	sudo docker image rm -f website
+	sudo docker image rm -f adminer
+	sudo docker image rm -f redis
+	sudo docker image rm -f cadvisor
 
-
-fclean: clear_imgs clear_volumes 
+fclean: clear_imgs clear_docker_volumes 
 
 # list all containers defined in the yml file
 ps:
@@ -56,4 +59,4 @@ ps:
 ffclean:
 	sudo docker container prune  -f && docker network prune -f && docker image prune -f && docker volume prune -f
 
-kill: fclean ffclean clear_extra_volume
+kill: fclean ffclean 
