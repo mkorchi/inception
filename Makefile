@@ -49,6 +49,7 @@ clear_imgs:
 	sudo docker image rm -f adminer
 	sudo docker image rm -f redis
 	sudo docker image rm -f cadvisor
+	sudo docker image rm -f ftp
 
 fclean: clear_imgs clear_docker_volumes 
 

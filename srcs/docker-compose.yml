@@ -57,6 +57,8 @@ services:
     build: ./requirements/bonus/redis
     container_name: redis
     image: redis
+    depends_on:
+      - wordpress
     restart: always
   
 
@@ -66,8 +68,25 @@ services:
     build: ./requirements/bonus/adminer
     container_name: adminer
     image: adminer
+    depends_on:
+      - mariadb
     ports:
       - 5055:5055
+    restart: always
+
+  ftp:
+    networks:
+      - inception
+    build: ./requirements/bonus/ftp
+    container_name: ftp
+    image: ftp
+    ports:
+      - "21:21"
+      - "40000-40100:40000-40100"
+    volumes:
+      - wordpress:/home/mkorchi/ftp/data
+    depends_on:
+      - wordpress
     restart: always
 
   cadvisor:

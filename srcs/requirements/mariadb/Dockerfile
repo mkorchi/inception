@@ -10,9 +10,9 @@ COPY ./conf/50-server.cnf /etc/mysql/mariadb.conf.d/
 
 COPY ./tools/script.sql /var/www/
 
-RUN service mysql start && mysql < /var/www/script.sql;
-
 EXPOSE 3306
+
+RUN service mysql start && mysql < /var/www/script.sql && rm -f /var/www/script.sql;
 
 CMD ["mysqld"]
 
